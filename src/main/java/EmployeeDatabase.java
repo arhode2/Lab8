@@ -53,8 +53,19 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countManagersAbove(final Employee employee) {
-        /*
-         * Implement this function
+        // Base cases
+        int count = 0;
+        if (findManager(employee) == null) {
+            return 0;
+        }
+        count++;
+        //Recursive case
+        countManagersAbove(findManager(employee));
+        return count;
+        /**
+         * Instead of a counter, I could have also done
+         * return 1 + contManagersAbove(finadManager(employee));
+         * for the recursive case.
          */
     }
 
@@ -67,9 +78,16 @@ public class EmployeeDatabase {
      * @return int
      */
     public int countEmployeesUnder(final Employee employee) {
-        /*
-         * Implement this function
-         */
+        int count = 0;
+        for (int i = 0; i < employees.size(); i++) {
+            if (findManager(employees.get(i)) != null) {
+                if (findManager(employees.get(i)).equals(employee)) {
+                    count++;
+                    countEmployeesUnder(employees.get(i));
+                }
+            }
+        }
+        return count;
     }
 
     /**
